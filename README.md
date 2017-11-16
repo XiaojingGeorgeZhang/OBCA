@@ -15,9 +15,9 @@ Paper describing the theory can be found [here](http://arxiv.org/abs/1711.03449)
 
 4. Install Julia package JuMP using Pkg.add("JuMP")
 
-5. Install Julia package Ipopt using Pkg.add(“Ipopt”)
+5. Install Julia package Ipopt using Pkg.add("Ipopt")
 
-6. Install Julia package PyPlot using Pkg.add(“PyPlot”)
+6. Install Julia package PyPlot using Pkg.add("PyPlot")
 
 
 ### Running the parking example 
