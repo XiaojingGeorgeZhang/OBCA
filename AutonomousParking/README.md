@@ -1,5 +1,5 @@
 # OBCA - Autonomous Parking
-Optimization-Based Collision Avoidance - a path planner for autonomous parking
+Optimization-Based Collision Avoidance - an application towards autonomous parking
 
 Paper describing the theory can be found [here](http://arxiv.org/abs/1711.03449).
 
