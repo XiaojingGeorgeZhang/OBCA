@@ -1,15 +1,15 @@
-# OBCA
+# OBCA - Autonomous Parking
 Optimization-Based Collision Avoidance - a path planner for autonomous parking
 
 Paper describing the theory can be found [here](http://arxiv.org/abs/1711.03449).
 
-## How to run the code:
+## How to run the Parking code:
 
 ### First steps
 
 1. Change to the directory
 
-2. Install Julia from https://julialang.org/downloads/ (code tested on version 0.5) 
+2. Install Julia from https://julialang.org/downloads/ (code tested on version 0.5 and 0.6) 
 
 3. Open Julia in terminal
 
@@ -40,6 +40,6 @@ include("setup.jl")
 
 
 ### Note
-1. This code has been tested on Julia 0.5, and might not run on any other Julia versions.
+1. This code has been tested on Julia 0.5 and 0.6, and might not run on any other Julia versions.
 
 2. For best results, run code in Julia terminal
