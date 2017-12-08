@@ -1,5 +1,5 @@
-# OBCA - Autonomous Parking
-Optimization-Based Collision Avoidance - a path planner for autonomous parking
+# OBCA - Quadcopter Path Planning
+Optimization-Based Collision Avoidance - a path planner for quadcopter
 
 Paper describing the theory can be found [here](http://arxiv.org/abs/1711.03449).
 
@@ -24,19 +24,19 @@ Paper describing the theory can be found [here](http://arxiv.org/abs/1711.03449)
 
 1. Start Julia in terminal
 
-2. Type in terminal: include("setup.jl")
+2. Type in terminal: include("setupQuadcopter.jl")
 
-3. Type in terminal: include("main.jl")
+3. Type in terminal: include("mainQuadcopter.jl")
 
 
 ### modifying the code 
 
-1. To play with start points, change x0 in main.jl and run 
-the code by include("main.jl")
+1. To play with start points, change x0 in mainQuadcopter.jl and run 
+the code by include("mainQuadcopter.jl")
 
 2. If you change anything in one of the collision avoidance
 problems, you need to activate the changes by running 
-include("setup.jl")
+include("setupQuadcopter.jl")
 
 
 ### Note
