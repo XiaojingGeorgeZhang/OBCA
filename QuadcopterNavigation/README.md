@@ -1,5 +1,5 @@
 # OBCA - Quadcopter Path Planning
-Optimization-Based Collision Avoidance - a path planner for quadcopter
+Optimization-Based Collision Avoidance - an application in quadcopter path planning
 
 Paper describing the theory can be found [here](http://arxiv.org/abs/1711.03449).
 
