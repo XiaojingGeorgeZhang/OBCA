@@ -3,7 +3,7 @@ Optimization-Based Collision Avoidance - a path planner for quadcopter
 
 Paper describing the theory can be found [here](http://arxiv.org/abs/1711.03449).
 
-## How to run the Parking code:
+## How to run the code:
 
 ### First steps
 
