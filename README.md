@@ -8,7 +8,11 @@ OBCA is a novel method for formulating collision avoidance constraints. It provi
 
 OBCA can be used to in path planning algoirthms to generate *high-quality paths* that satisfy the system dynamics as well as satefy constraints. We provide [Julia](https://julialang.org/)-based implementations for a quadcopter navigation problem and for autonomous parking in .
 
-OBCA for Quadcopter Navigation
+## Examples
+
+### OBCA for Quadcopter Navigation
 ![alt text](https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajQuad_3D_Video.gif "QuadcopterNavigation")
+
+<img src="https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajQuad_3D_Video.gif" width="40" />
 
 
