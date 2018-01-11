@@ -13,6 +13,6 @@ OBCA can be used to in path planning algoirthms to generate *high-quality paths*
 ### OBCA for Quadcopter Navigation
 ![alt text](https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajQuad_3D_Video.gif "QuadcopterNavigation")
 
-<img src="https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajQuad_3D_Video.gif" width="200" />
+<img src="https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajQuad_3D_Video.gif" width="1500" />
 
 
