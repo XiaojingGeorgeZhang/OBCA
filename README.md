@@ -10,9 +10,15 @@ OBCA can be used to in path planning algoirthms to generate *high-quality paths*
 
 ## Examples
 
+### OBCA for 
+
 ### OBCA for Quadcopter Navigation
-![alt text](https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajQuad_3D_Video.gif "QuadcopterNavigation")
+<img src="https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajQuad_3D_Video.gif" width="700" />
 
-<img src="https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajQuad_3D_Video.gif" width="500" />
+### OBCA for Autonomous Parking 
+<img src="https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajBack_ParkingVideo.gif" width="700" />
 
+<img src="https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajPar_ParkingVideo.gif" width="700" />
+
+<img src="https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajTrailer_ParkingVideo.gif" width="700" />
 
