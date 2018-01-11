@@ -16,12 +16,15 @@ OBCA can be used to in path planning algoirthms to generate *high-quality paths*
 
 ### OBCA for Autonomous Parking 
 
-Backwards Parking
+#### Backwards Parking
+
 <img src="https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajBack_ParkingVideo.gif" width="700" />
 
-Parallel Parking
+#### Parallel Parking
+
 <img src="https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajPar_ParkingVideo.gif" width="700" />
 
-Parking of Truck with Trailer
+#### Parking of Truck with Trailer
+
 <img src="https://github.com/XiaojingGeorgeZhang/OBCA/blob/master/images/TrajTrailer_ParkingVideo.gif" width="700" />
 
