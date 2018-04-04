@@ -3,6 +3,8 @@ Optimization-Based Collision Avoidance - a path planner for autonomous navigatio
 
 Paper describing the theory can be found [here](http://arxiv.org/abs/1711.03449).
 
+*Note*: A version of OBCA specialized for autonomous parking can be found [H-OBCA](https://github.com/XiaojingGeorgeZhang/H-OBCA).
+
 ## Short Description
 OBCA is a novel method for formulating collision avoidance constraints. It provides a smooth reformulation of collision avoidance constraints, allowing the use of generic non-linear optimization solvers. 
 
