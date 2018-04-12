@@ -76,14 +76,14 @@ plotTrajQuadcopter(xWS',uWS',N,egoR,ob12,ob22,ob32,ob42,ob52,ob6,egoR,"Warm Star
 
 # trajectory with Distance Approach
 println("Trajectory using Distance Approach (Collision Avoidance)")
-xp1,up1,scaleTime1,exitflag1,time1 = QuadcopterDist(x0,xF,N,Ts,R,ob12,ob22,ob32,ob42,ob52,xWS,uWS,timeWS)
+xp1,up1,scaleTime1,exitflag1,time1 = QuadcopterDist(x0,xF,N,Ts,egoR,ob12,ob22,ob32,ob42,ob52,xWS,uWS,timeWS)
 close("all")
 plotTrajQuadcopter(xp1',up1',N,egoR,ob12,ob22,ob32,ob42,ob52,ob6,egoR,"Collision Avoidance with distance approach")
 
 
 # trajectory with Signed Distance Approach
 println("Trajectory using Signed Distance Approach (Minimum Penetration)")
-xp2,up2,scaleTime2,exitflag2,time2 = QuadcopterSignedDist(x0,xF,N,Ts,R,ob12,ob22,ob32,ob42,ob52,xWS,uWS,timeWS)
+xp2,up2,scaleTime2,exitflag2,time2 = QuadcopterSignedDist(x0,xF,N,Ts,egoR,ob12,ob22,ob32,ob42,ob52,xWS,uWS,timeWS)
 close("all")
 plotTrajQuadcopter(xp2',up2',N,egoR,ob12,ob22,ob32,ob42,ob52,ob6,egoR,"Minimum Penetration with signed-distance approach")
 
