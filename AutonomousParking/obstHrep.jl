@@ -1,6 +1,6 @@
 ###############
 # OBCA: Optimization-based Collision Avoidance - a path planner for autonomous parking
-# Copyright (C) 2017 
+# Copyright (C) 2018
 # Alexander LINIGER [liniger@control.ee.ethz.ch; Automatic Control Lab, ETH Zurich]
 # Xiaojing ZHANG [xiaojing.zhang@berkeley.edu; MPC Lab, UC Berkeley]
 #
@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############
 # The paper describing the theory can be found here:
-# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017
+# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017, [https://arxiv.org/abs/1711.03449]
 ###############
 
 ###############
@@ -36,27 +36,18 @@ function obstHrep(nOb, vOb, lOb)
 	end
 
 	# these matrices contain the H-rep
-	A_all = zeros(sum(vOb),2)
-	b_all = zeros(sum(vOb),1)
+	A_all = zeros(sum(vOb)-nOb,2)
+	b_all = zeros(sum(vOb)-nOb,1)
 
 	# counter for lazy people
 	lazyCounter = 1;
 
 	for i = 1 : nOb	# building H-rep
-		if vOb[i] != length(lOb[i])-1
-			println("ERROR: vOb and lOb do not match - remember to duplicate first vertex")
-		end
-		if lOb[i][1] != lOb[i][end]
-			print("ERROR in obstacle description: first and last vertex do not match in list lOb[")
-			print(i)
-			println("]")
-		end
-	
-		A_i = zeros(vOb[i],2)
-		b_i = zeros(vOb[i],1)
+		A_i = zeros(vOb[i]-1,2)
+		b_i = zeros(vOb[i]-1,1)
 	
 		# take two subsequent vertices, and compute hyperplane
-		for j = 1 : vOb[i]
+		for j = 1 : vOb[i]-1
 
 			# extract two vertices
 			v1 = lOb[i][j]		# vertex 1
@@ -99,11 +90,11 @@ function obstHrep(nOb, vOb, lOb)
 		end
 	
 		# store everything
-		A_all[lazyCounter : lazyCounter+vOb[i]-1,:] = A_i
-		b_all[lazyCounter : lazyCounter+vOb[i]-1] = b_i
+		A_all[lazyCounter : lazyCounter+vOb[i]-2,:] = A_i
+		b_all[lazyCounter : lazyCounter+vOb[i]-2] = b_i
 	
 		# update counter
-		lazyCounter = lazyCounter + vOb[i]
+		lazyCounter = lazyCounter + vOb[i]-1
 	end
 
 	return A_all, b_all

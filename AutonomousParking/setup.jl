@@ -1,6 +1,6 @@
 ###############
 # OBCA: Optimization-based Collision Avoidance - a path planner for autonomous parking
-# Copyright (C) 2017 
+# Copyright (C) 2018
 # Alexander LINIGER [liniger@control.ee.ethz.ch; Automatic Control Lab, ETH Zurich]
 # Xiaojing ZHANG [xiaojing.zhang@berkeley.edu; MPC Lab, UC Berkeley]
 #
@@ -13,12 +13,12 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-#
+# 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############
 # The paper describing the theory can be found here:
-# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017
+# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017, [https://arxiv.org/abs/1711.03449]
 ###############
 
 ###############
@@ -30,22 +30,23 @@
 # include IPOPT -> IP based NLP solver
 # include PyPlot -> Ploting library (matplotlib python)
 ##############################
-using JuMP, Ipopt, PyPlot
-##############################
-# register warm start function
-include("WarmStart.jl")
+using JuMP, Ipopt, PyPlot, NearestNeighbors
 ##############################
 # register Distance and Signeddistance
-# parking optimal control problems
-include("ParkingDist.jl")
-include("ParkingSignedDist.jl")
+include("ParkingDist.jl")			# should be the correct one
+include("ParkingSignedDist.jl")	# good
+##############################
+# register constraint satisfaction check
+include("ParkingConstraints.jl")
 ##############################
 # register polytope converter
 include("obstHrep.jl")
 ##############################
 # register ploting function
 include("plotTraj.jl")
-include("plotSetup.jl")
+include("hybrid_a_star.jl")
 ##############################
+include("DualMultWS.jl")
+include("veloSmooth.jl")
 # function that clears terminal output
 clear() = run(@static is_unix() ? `clear` : `cmd /c cls`)

@@ -1,6 +1,6 @@
 ###############
 # OBCA: Optimization-based Collision Avoidance - a path planner for autonomous parking
-# Copyright (C) 2017 
+# Copyright (C) 2018
 # Alexander LINIGER [liniger@control.ee.ethz.ch; Automatic Control Lab, ETH Zurich]
 # Xiaojing ZHANG [xiaojing.zhang@berkeley.edu; MPC Lab, UC Berkeley]
 #
@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############
 # The paper describing the theory can be found here:
-# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017
+# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017, [https://arxiv.org/abs/1711.03449]
 ###############
 
 ###############
@@ -28,26 +28,8 @@
 
 function plotTraj(xp,up,N,ego,L,nOb,vOb,lOb,disp_title,plotNumb)
 
-	obcenter1 = [(ob1[1]+ob1[3])/2-ob1[3];
-            	 (ob1[2]+ob1[4])/2-ob1[4]]
-
-	obcenter2 = [(ob2[1]+ob2[3])/2-ob2[3];
-	             (ob2[2]+ob2[4])/2-ob2[4]]
-
-	obcenter3 = [(ob3[1]+ob3[3])/2-ob3[3];
-	             (ob3[2]+ob3[4])/2-ob3[4]]
-
     W_ev = ego[2]+ego[4]
 	L_ev = ego[1]+ego[3]
-
-	W_tv1 = ob1[2]+ob1[4]
-	L_tv1 = ob1[1]+ob1[3]
-
-	W_tv2 = ob2[2]+ob2[4]
-	L_tv2 = ob2[1]+ob2[3]
-
-	W_tv3 = ob3[2]+ob3[4]
-	L_tv3 = ob3[1]+ob3[3]
 
 	up = [up ; zeros(1,2)]	# final position no input
 
