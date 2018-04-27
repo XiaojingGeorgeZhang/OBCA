@@ -1,6 +1,6 @@
 ###############
 # OBCA: Optimization-based Collision Avoidance - a path planner for autonomous parking
-# Copyright (C) 2017 
+# Copyright (C) 2018
 # Alexander LINIGER [liniger@control.ee.ethz.ch; Automatic Control Lab, ETH Zurich]
 # Xiaojing ZHANG [xiaojing.zhang@berkeley.edu; MPC Lab, UC Berkeley]
 #
@@ -18,11 +18,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############
 # The paper describing the theory can be found here:
-# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017
+# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017, [https://arxiv.org/abs/1711.03449]
 ###############
 
 
-function plotTrajQuadcopter(xp,up,N,ego,ob1,ob2,ob3,ob4,ob5,ob6,R,disp_title)
+function plotTrajQuadcopter(xp,up,N,ego,ob1,ob2,ob3,ob4,ob5,ob6,R,disp_title,figNumOffset)
 	###########
 	for i = 1:2
 		if ob1[i] >= 10
@@ -109,12 +109,12 @@ function plotTrajQuadcopter(xp,up,N,ego,ob1,ob2,ob3,ob4,ob5,ob6,R,disp_title)
 		ob5[6] = 0
 	end
 
-	println(ob1)
-	println(ob2)
-	println(ob3)
-	println(ob4)
-	println(ob5)
-	println(ob6)
+	# println(ob1)
+	# println(ob2)
+	# println(ob3)
+	# println(ob4)
+	# println(ob5)
+	# println(ob6)
 
 	obcenter1 = [(ob1[1]+ob1[4])/2-ob1[4];
             	 (ob1[2]+ob1[5])/2-ob1[5];
@@ -167,7 +167,8 @@ function plotTrajQuadcopter(xp,up,N,ego,ob1,ob2,ob3,ob4,ob5,ob6,R,disp_title)
 	H_tv6 = ob6[3]+ob6[6]
 
 	for i = 1:1:N
-	    figure(1)
+		######### X-Y plot #############
+	    figure(1+figNumOffset)
 	    # subplot(3,1,1)
 	    carBox(obcenter1,0,W_tv1/2,L_tv1/2)
 		title("X-Y plot")
@@ -190,8 +191,8 @@ function plotTrajQuadcopter(xp,up,N,ego,ob1,ob2,ob3,ob4,ob5,ob6,R,disp_title)
 	    axis([-2,12,-2,12])
 		hold(0)
 		
-	    ############################
-	    figure(2)
+	    ######### X-Z plot #############
+	    figure(2+figNumOffset)
 	    carBox(obcenter1[[1,3]],0,H_tv1/2,L_tv1/2)
 		title("X-Z plot")
 	    hold(1)
@@ -212,12 +213,9 @@ function plotTrajQuadcopter(xp,up,N,ego,ob1,ob2,ob3,ob4,ob5,ob6,R,disp_title)
 	    axis("equal")
 	    axis([-2,12,-1,6])
 	    hold(0)
-	    
-	    sleep(0.01)
-	end
-
-	for i = 1:1:N
-	    figure(3)
+		
+	    # 3D plots
+		figure(3+figNumOffset)
 	    
 	    x0 = [xp[i,1];
 	          xp[i,2];
@@ -238,9 +236,35 @@ function plotTrajQuadcopter(xp,up,N,ego,ob1,ob2,ob3,ob4,ob5,ob6,R,disp_title)
 	    axis([0,10,0,10])
 	    zlim([0,5])
 	    hold(0)
-
-	    sleep(0.01)
+	    
+	    sleep(0.001)
 	end
+
+	# for i = 1:1:N
+# 	    figure(3+figNumOffset)
+#
+# 	    x0 = [xp[i,1];
+# 	          xp[i,2];
+# 	          xp[i,3]]
+#
+# 	    plot3D(xp[1:i,1],xp[1:i,2],xp[1:i,3],"b")
+# 		title(disp_title)
+# 	    hold(1)
+# 	    Box3D(obcenter1,L_tv1/2,W_tv1/2,H_tv1/2)
+# 	    Box3D(obcenter2,L_tv2/2,W_tv2/2,H_tv2/2)
+# 	    Box3D(obcenter3,L_tv3/2,W_tv3/2,H_tv3/2)
+# 	    Box3D(obcenter4,L_tv4/2,W_tv4/2,H_tv4/2)
+# 	    Box3D(obcenter5,L_tv5/2,W_tv5/2,H_tv5/2)
+# 	    Box3D(obcenter6,L_tv6/2,W_tv6/2,H_tv6/2)
+# 	    quadBall(x0,R)
+#
+# 	    axis("equal")
+# 	    axis([0,10,0,10])
+# 	    zlim([0,5])
+# 	    hold(0)
+#
+# 	    sleep(0.01)
+# 	end
 
 
 end

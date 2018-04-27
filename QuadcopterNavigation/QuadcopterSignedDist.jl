@@ -1,6 +1,6 @@
 ###############
 # OBCA: Optimization-based Collision Avoidance - a path planner for autonomous parking
-# Copyright (C) 2017 
+# Copyright (C) 2018
 # Alexander LINIGER [liniger@control.ee.ethz.ch; Automatic Control Lab, ETH Zurich]
 # Xiaojing ZHANG [xiaojing.zhang@berkeley.edu; MPC Lab, UC Berkeley]
 #
@@ -18,17 +18,17 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############
 # The paper describing the theory can be found here:
-# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017
+# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017, [https://arxiv.org/abs/1711.03449]
 ###############
 
 
 function QuadcopterSignedDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 
 	# define solver
-	m = Model(solver=IpoptSolver(hessian_approximation="exact",mumps_pivtol=5e-7,mumps_pivtolmax=0.1,mumps_mem_percent=10000,
-	                             recalc_y="no",alpha_for_y="min",required_infeasibility_reduction=0.6,
-	                             min_hessian_perturbation=1e-10,jacobian_regularization_value=1e-7,tol=1e-5,
-	                             print_level=3,max_iter=400, suppress_all_output="yes"))#state
+ 	m = Model(solver=IpoptSolver(hessian_approximation="exact",mumps_pivtol=5e-7,mumps_pivtolmax=0.1,mumps_mem_percent=10000,
+ 	                             recalc_y="no",alpha_for_y="min",required_infeasibility_reduction=0.6,
+ 	                             min_hessian_perturbation=1e-10,jacobian_regularization_value=1e-7,tol=1e-5,
+ 	                             print_level=0))#state
 
 
 	@variable(m, x[1:12,1:(N+1)])
@@ -66,7 +66,8 @@ function QuadcopterSignedDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 	                     1e-2*sum( sum((u[j,i]-u[j,i+1])^2 for j=1:4)  for i = 1:N-1) + 
 	                     1*sum(sum(reg3*x[j,i]^2  for i = 1:N+1) for j = [10,11,12]) +
 	                     sum(0.25*timeScale[i] + 5*timeScale[i]^2 for i = 1:N+1)  +
-	                     sum(sum(8e0*slack[j,i] + 1e2*slack[j,i]^2 for i = 1:N+1) for j = 1:5) +
+	                     sum(sum(1e2*slack[j,i] + 1e3*slack[j,i]^2 for i = 1:N+1) for j = 1:5) +
+						 # sum(sum(8e0*slack[j,i] + 1e2*slack[j,i]^2 for i = 1:N+1) for j = 1:5) +
 	                     1*sum(sum(reg2*l1[j,i]^2 + reg2*l2[j,i]^2 + reg2*l3[j,i]^2 + reg2*l4[j,i]^2+ reg2*l5[j,i]^2 for i = 1:N+1) for j = 1:6));
 
 	#input constraints
@@ -206,7 +207,8 @@ function QuadcopterSignedDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 	setvalue(l4,0.05*ones(6,N+1))
 	setvalue(l5,0.05*ones(6,N+1))
 
-	setvalue(slack,0.1*ones(5,N+1))
+	setvalue(slack,1*ones(5,N+1))		# setvalue(slack,0.1*ones(5,N+1))
+	# setvalue(slack,zeros(5,N+1))	# slows down solver very much
 
 
 	time1 = 0
@@ -216,14 +218,15 @@ function QuadcopterSignedDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 
 
 	tic()
-	status = solve(m; suppress_warnings=true)
-	time1 = toc()
+	# status = solve(m; suppress_warnings=true)
+	status = solve(m)
+	time1 = toq()
 
-	println(time1)
+	# println(time1)
 
-	flag = 2;
-
-
+	flag = 1;
+	
+	# println("solver status after 1 trial: ", status)
 	if flag == 1
 	    if status == :Optimal
 	        exitflag = 1
@@ -236,14 +239,14 @@ function QuadcopterSignedDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 	    elseif status ==:Error || status ==:UserLimit
 	        tic()
 	        status = solve(m; suppress_warnings=true)
-	        time2 = toc()
+	        time2 = toq()
 
 	        if status == :Optimal
 	            exitflag = 1
 	        elseif status ==:Error || status ==:UserLimit
 	            tic()
 	            status = solve(m; suppress_warnings=true)
-	            time3 = toc()
+	            time3 = toq()
 
 	            if status == :Optimal
 	                exitflag = 1
@@ -251,7 +254,7 @@ function QuadcopterSignedDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 
 	                tic()
 	                status = solve(m; suppress_warnings=true)
-	                time4 = toc()
+	                time4 = toq()
 
 	                if status == :Optimal
 	                    exitflag = 1
@@ -278,13 +281,21 @@ function QuadcopterSignedDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 	slackp = getvalue(slack)
 
 	sumSlack = sum(slackp)
-	println(sumSlack)
+	# println(sumSlack)
 	if exitflag == 1 && sumSlack > 1e-3
+		println("sum-slack condition not satisfied")
 	    exitflag = 2
 	end
 
+	l1p = getvalue(l1)
+	l2p	= getvalue(l2)
+	l3p = getvalue(l3)
+	l4p = getvalue(l4)
+	l5p = getvalue(l5)
+	lp = [l1p ; l2p ; l3p ; l4p ; l5p]
 
-	return xp, up, timeScalep, exitflag, time
+
+	return xp, up, timeScalep, exitflag, time, lp, string(status)
 
 end
 

@@ -156,8 +156,6 @@ function ParkingSignedDist(x0,xF,N,Ts,L,ego,xWS,uWS,timeWS,XYbounds,nOb,vOb,A,b)
 			# -g'*mu + (A*t - b)*lambda > 0
 			@NLconstraint(m, -sum(g[k]*nj[k,i] for k = 1:4) + (x[1,i]+cos(x[3,i])*offset)*sum(Aj[k,1]*lj[k,i] for k = 1:vOb[j])
 							+ (x[2,i]+sin(x[3,i])*offset)*sum(Aj[k,2]*lj[k,i] for k=1:vOb[j]) - sum(bj[k]*lj[k,i] for k=1:vOb[j]) + sl[j,i]  >= dmin  )
-
-
 		end
 	end
 

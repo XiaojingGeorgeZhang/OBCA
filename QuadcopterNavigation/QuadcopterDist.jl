@@ -1,6 +1,6 @@
 ###############
 # OBCA: Optimization-based Collision Avoidance - a path planner for autonomous parking
-# Copyright (C) 2017 
+# Copyright (C) 2018
 # Alexander LINIGER [liniger@control.ee.ethz.ch; Automatic Control Lab, ETH Zurich]
 # Xiaojing ZHANG [xiaojing.zhang@berkeley.edu; MPC Lab, UC Berkeley]
 #
@@ -18,16 +18,16 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############
 # The paper describing the theory can be found here:
-# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017
+# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017, [https://arxiv.org/abs/1711.03449]
 ###############
 
 
 function QuadcopterDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 
-	m = Model(solver=IpoptSolver(hessian_approximation="exact",mumps_pivtol=5e-7,mumps_pivtolmax=0.1,mumps_mem_percent=10000,
-	                             recalc_y="no",alpha_for_y="min",required_infeasibility_reduction=0.65,
-	                             min_hessian_perturbation=1e-10,jacobian_regularization_value=1e-7,tol=1e-5,
-	                             print_level=3,max_iter=400, suppress_all_output="yes"))#state
+ 	m = Model(solver=IpoptSolver(hessian_approximation="exact",mumps_pivtol=5e-7,mumps_pivtolmax=0.1,mumps_mem_percent=10000,
+ 	                             recalc_y="no",alpha_for_y="min",required_infeasibility_reduction=0.65,
+ 	                             min_hessian_perturbation=1e-10,jacobian_regularization_value=1e-7,tol=1e-5,
+ 	                             print_level=0))#state
 
 
 	@variable(m, x[1:12,1:(N+1)])
@@ -89,7 +89,7 @@ function QuadcopterDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 	@constraint(m, [i=1:N+1],-1 <= x[11,i] <= 1)
 	@constraint(m, [i=1:N+1],-1 <= x[12,i] <= 1)
 
-	@constraint(m, 0.5 .<= timeScale .<= 2)
+	@constraint(m, 0.5 .<= timeScale .<= 2)			# original: 0.5 <= .... <=2
 	# positivity constraints on lambda
 	@constraint(m, l1.>= 0)
 	@constraint(m, l2.>= 0)
@@ -160,31 +160,31 @@ function QuadcopterDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 	    # rotation matrix
 
 	    b1 = ob1
-	    @NLconstraint(m, (l1[1,i]-l1[4,i])^2 + (l1[2,i]-l1[5,i])^2 + (l1[3,i]-l1[6,i])^2 == 1)
+	    @NLconstraint(m, (l1[1,i]-l1[4,i])^2 + (l1[2,i]-l1[5,i])^2 + (l1[3,i]-l1[6,i])^2 == 1)		# == (sd), <= (d)
 	    @NLconstraint(m,sum(-b1[j]*l1[j,i] for j = 1:6) + x[1,i]*sum(A[j,1]*l1[j,i] for j=1:6) + 
 	                         x[2,i]*sum(A[j,2]*l1[j,i] for j=1:6) + x[3,i]*sum(A[j,3]*l1[j,i] for j=1:6) >=R)
 
 	    ######################
 	    b2 = ob2
-	    @NLconstraint(m, (l2[1,i]-l2[4,i])^2 + (l2[2,i]-l2[5,i])^2 + (l2[3,i]-l2[6,i])^2 == 1)
+	    @NLconstraint(m, (l2[1,i]-l2[4,i])^2 + (l2[2,i]-l2[5,i])^2 + (l2[3,i]-l2[6,i])^2 == 1)		# ==
 	    @NLconstraint(m,sum(-b2[j]*l2[j,i] for j = 1:6) + x[1,i]*sum(A[j,1]*l2[j,i] for j=1:6) + 
 	                         x[2,i]*sum(A[j,2]*l2[j,i] for j=1:6) + x[3,i]*sum(A[j,3]*l2[j,i] for j=1:6) >=R)
 
 	    #########################
 	    b3 = ob3
-	    @NLconstraint(m, (l3[1,i]-l3[4,i])^2 + (l3[2,i]-l3[5,i])^2 + (l3[3,i]-l3[6,i])^2 == 1)
+	    @NLconstraint(m, (l3[1,i]-l3[4,i])^2 + (l3[2,i]-l3[5,i])^2 + (l3[3,i]-l3[6,i])^2 == 1)		# ==
 	    @NLconstraint(m,sum(-b3[j]*l3[j,i] for j = 1:6) + x[1,i]*sum(A[j,1]*l3[j,i] for j=1:6) + 
 	                         x[2,i]*sum(A[j,2]*l3[j,i] for j=1:6) + x[3,i]*sum(A[j,3]*l3[j,i] for j=1:6) >=R)
 
 	    #########################
 	    b4 = ob4
-	    @NLconstraint(m, (l4[1,i]-l4[4,i])^2 + (l4[2,i]-l4[5,i])^2 + (l4[3,i]-l4[6,i])^2 == 1)
+	    @NLconstraint(m, (l4[1,i]-l4[4,i])^2 + (l4[2,i]-l4[5,i])^2 + (l4[3,i]-l4[6,i])^2 == 1)		# ==
 	    @NLconstraint(m,sum(-b4[j]*l4[j,i] for j = 1:6) + x[1,i]*sum(A[j,1]*l4[j,i] for j=1:6) + 
 	                         x[2,i]*sum(A[j,2]*l4[j,i] for j=1:6) + x[3,i]*sum(A[j,3]*l4[j,i] for j=1:6) >=R)
 
 	    #########################
 	    b5 = ob5
-	    @NLconstraint(m, (l5[1,i]-l5[4,i])^2 + (l5[2,i]-l5[5,i])^2 + (l5[3,i]-l5[6,i])^2 == 1)
+	    @NLconstraint(m, (l5[1,i]-l5[4,i])^2 + (l5[2,i]-l5[5,i])^2 + (l5[3,i]-l5[6,i])^2 == 1)		# ==
 	    @NLconstraint(m,sum(-b5[j]*l5[j,i] for j = 1:6) + x[1,i]*sum(A[j,1]*l5[j,i] for j=1:6) + 
 	                         x[2,i]*sum(A[j,2]*l5[j,i] for j=1:6) + x[3,i]*sum(A[j,3]*l5[j,i] for j=1:6) >=R)
 
@@ -210,13 +210,13 @@ function QuadcopterDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 
 	tic()
 	status = solve(m; suppress_warnings=true)
-	time1 = toc()
+	time1 = toq()
 
-	println(time1)
+	# println(time1)
 
-	flag = 2;
+	flag = 1;
 
-
+	# println("solver status after 1 trial: ", status)
 	if flag == 1
 	    if status == :Optimal
 	        exitflag = 1
@@ -224,19 +224,21 @@ function QuadcopterDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 	        exitflag = 0
 	    end
 	elseif flag == 2
+		# println("flag 1: ", flag)
 	    if status == :Optimal
 	        exitflag = 1
 	    elseif status ==:Error || status ==:UserLimit
 	        tic()
 	        status = solve(m; suppress_warnings=true)
-	        time2 = toc()
+	        time2 = toq()
+			# println("time2: ", time2)
 
 	        if status == :Optimal
 	            exitflag = 1
 	        elseif status ==:Error || status ==:UserLimit
 	            tic()
 	            status = solve(m; suppress_warnings=true)
-	            time3 = toc()
+	            time3 = toq()
 
 	            if status == :Optimal
 	                exitflag = 1
@@ -244,7 +246,7 @@ function QuadcopterDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 
 	                tic()
 	                status = solve(m; suppress_warnings=true)
-	                time4 = toc()
+	                time4 = toq()
 
 	                if status == :Optimal
 	                    exitflag = 1
@@ -267,8 +269,15 @@ function QuadcopterDist(x0,xF,N,Ts,R,ob1,ob2,ob3,ob4,ob5,xWS,uWS,timeWS)
 	xp = getvalue(x)
 	up = getvalue(u)
 	timeScalep = getvalue(timeScale)
-
-	return xp, up, timeScalep, exitflag, time
+	l1p = getvalue(l1)
+	l2p	= getvalue(l2)
+	l3p = getvalue(l3)
+	l4p = getvalue(l4)
+	l5p = getvalue(l5)
+	lp = [l1p ; l2p ; l3p ; l4p ; l5p]
+	
+	
+	return xp, up, timeScalep, exitflag, time, lp, string(status)
 
 end
 

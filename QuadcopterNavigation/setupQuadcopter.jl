@@ -1,6 +1,6 @@
 ###############
 # OBCA: Optimization-based Collision Avoidance - a path planner for autonomous parking
-# Copyright (C) 2017 
+# Copyright (C) 2018
 # Alexander LINIGER [liniger@control.ee.ethz.ch; Automatic Control Lab, ETH Zurich]
 # Xiaojing ZHANG [xiaojing.zhang@berkeley.edu; MPC Lab, UC Berkeley]
 #
@@ -18,7 +18,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ###############
 # The paper describing the theory can be found here:
-# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017
+# 	X. Zhang, A. Liniger and F. Borrelli; "Optimization-Based Collision Avoidance"; Technical Report, 2017, [https://arxiv.org/abs/1711.03449]
 ###############
 
 ###############
@@ -26,9 +26,11 @@
 ###############
  
 using JuMP, Ipopt, PyPlot
-include("WarmStartQuadcopter.jl")
 include("QuadcopterDist.jl")
 include("QuadcopterSignedDist.jl")
 include("plotTrajQuadcopter.jl")
+include("a_star_3D.jl")
+include("constrSatisfaction.jl")
+
 
 clear() = run(@static is_unix() ? `clear` : `cmd /c cls`)
