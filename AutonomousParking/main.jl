@@ -34,7 +34,7 @@ close("all")
 
 # choose one of two predefined scenarios
 scenario = "parallel"
-# scenario = "backwards"
+scenario = "backwards"
 
 # fixed or variable time 1/0
 fixTime = 0				# default: 0 (variable time steps)

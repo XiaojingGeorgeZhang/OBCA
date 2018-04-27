@@ -79,7 +79,8 @@ function ParkingSignedDist(x0,xF,N,Ts,L,ego,XYbounds,nOb,vOb, A, b,rx,ry,ryaw,fi
 		 					 sum(0.1*((u[1,i+1]-u[1,i])/Ts)^2 + 0.1*((u[2,i+1]-u[2,i])/Ts)^2 for i = 1:N-1)+
 		 					 	(0.1*((u[1,1]-u0[1])/(Ts))^2 + 0.1*((u[2,1]-u0[2])/(Ts))^2) +
 		 					 sum(0.0001*x[4,i]^2 for i=1:N+1)+
-		 					 sum(0.001*(x[1,i]-rx[i])^2 + 0.001*(x[2,i]-ry[i])^2 + 0.01*(x[3,i]-ryaw[i])^2 for i=1:N+1))
+		 					 sum(0.001*(x[1,i]-rx[i])^2 + 0.001*(x[2,i]-ry[i])^2 + 0.01*(x[3,i]-ryaw[i])^2 for i=1:N+1) + 
+							 sum(sum(1e2*sl[j,i] + 1e4*sl[j,i]^2 for i = 1:N+1) for j = 1 : nOb)							)
 	else
 	# variable time objective
 		@NLobjective(m, Min,sum(0.01*u[1,i]^2 + 0.1*u[2,i]^2 for i = 1:N) + 
