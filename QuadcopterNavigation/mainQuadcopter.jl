@@ -137,7 +137,7 @@ xWS_as = [rx'/10 ; ry'/10 ; rz'/10 ; zeros(3,N_as+1) ; vWS ; zeros(3,N_as+1) ];
 uWS_as = 0.5*ones(4,N_as);	# same length as horizon
 timeWS_as = 1
 # not plotting might get rid of IPOPT restoration failure messages...
-plotTrajQuadcopter(xWS_as',uWS_as',N_as,egoR,ob12,ob22,ob32,ob42,ob52,ob6,egoR,"Warm Start (A*) ",0)
+# plotTrajQuadcopter(xWS_as',uWS_as',N_as,egoR,ob12,ob22,ob32,ob42,ob52,ob6,egoR,"Warm Start (A*) ",0)
 
 
 ######### trajectory with Distance Approach
