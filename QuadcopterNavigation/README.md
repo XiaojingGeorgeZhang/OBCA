@@ -19,6 +19,8 @@ Paper describing the theory can be found [here](http://arxiv.org/abs/1711.03449)
 
 6. Install Julia package PyPlot using Pkg.add("PyPlot")
 
+7. Install Julia package PyPlot using Pkg.add("NearestNeighbors")
+
 
 ### Running the parking example 
 
