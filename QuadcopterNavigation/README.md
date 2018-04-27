@@ -33,7 +33,7 @@ Paper describing the theory can be found [here](http://arxiv.org/abs/1711.03449)
 
 ### modifying the code 
 
-1. To play with start points, change x0 in mainQuadcopter.jl and run 
+1. To play with start points, change xF (or x0) in mainQuadcopter.jl and run 
 the code by include("mainQuadcopter.jl")
 
 2. If you change anything in one of the collision avoidance
